@@ -449,73 +449,73 @@ func (ff *FloatFormat) GetEncoding(d float64) uint64 {
 }
 
 func (ff *FloatFormat) GetHostFloat(e uint64) float64 {
-	r := C.float_format_get_host_float(ff.ptr, C.ulong(e))
+	r := C.float_format_get_host_float(ff.ptr, C.uint64_t(e))
 	return float64(r)
 }
 
 func (ff *FloatFormat) ConvertEncoding(from *FloatFormat, e uint64) float64 {
-	r := C.float_format_convert_encoding(from.ptr, ff.ptr, C.ulong(e))
+	r := C.float_format_convert_encoding(from.ptr, ff.ptr, C.uint64_t(e))
 	return float64(r)
 }
 
 func (ff *FloatFormat) OpEqual(a, b uint64) uint64 {
-	return uint64(C.float_format_op_Equal(ff.ptr, C.ulong(a), C.ulong(b)))
+	return uint64(C.float_format_op_Equal(ff.ptr, C.uint64_t(a), C.uint64_t(b)))
 }
 
 func (ff *FloatFormat) OpNotEqual(a, b uint64) uint64 {
-	return uint64(C.float_format_op_NotEqual(ff.ptr, C.ulong(a), C.ulong(b)))
+	return uint64(C.float_format_op_NotEqual(ff.ptr, C.uint64_t(a), C.uint64_t(b)))
 }
 func (ff *FloatFormat) OpLess(a, b uint64) uint64 {
-	return uint64(C.float_format_op_Less(ff.ptr, C.ulong(a), C.ulong(b)))
+	return uint64(C.float_format_op_Less(ff.ptr, C.uint64_t(a), C.uint64_t(b)))
 }
 func (ff *FloatFormat) OpLessEqual(a, b uint64) uint64 {
-	return uint64(C.float_format_op_LessEqual(ff.ptr, C.ulong(a), C.ulong(b)))
+	return uint64(C.float_format_op_LessEqual(ff.ptr, C.uint64_t(a), C.uint64_t(b)))
 }
 func (ff *FloatFormat) OpAdd(a, b uint64) uint64 {
-	return uint64(C.float_format_op_Add(ff.ptr, C.ulong(a), C.ulong(b)))
+	return uint64(C.float_format_op_Add(ff.ptr, C.uint64_t(a), C.uint64_t(b)))
 }
 func (ff *FloatFormat) OpDiv(a, b uint64) uint64 {
-	return uint64(C.float_format_op_Div(ff.ptr, C.ulong(a), C.ulong(b)))
+	return uint64(C.float_format_op_Div(ff.ptr, C.uint64_t(a), C.uint64_t(b)))
 }
 func (ff *FloatFormat) OpMult(a, b uint64) uint64 {
-	return uint64(C.float_format_op_Mult(ff.ptr, C.ulong(a), C.ulong(b)))
+	return uint64(C.float_format_op_Mult(ff.ptr, C.uint64_t(a), C.uint64_t(b)))
 }
 func (ff *FloatFormat) OpSub(a, b uint64) uint64 {
-	return uint64(C.float_format_op_Sub(ff.ptr, C.ulong(a), C.ulong(b)))
+	return uint64(C.float_format_op_Sub(ff.ptr, C.uint64_t(a), C.uint64_t(b)))
 }
 
 func (ff *FloatFormat) OpNan(a uint64) uint64 {
-	return uint64(C.float_format_op_Nan(ff.ptr, C.ulong(a)))
+	return uint64(C.float_format_op_Nan(ff.ptr, C.uint64_t(a)))
 }
 
 func (ff *FloatFormat) OpNeg(a uint64) uint64 {
-	return uint64(C.float_format_op_Neg(ff.ptr, C.ulong(a)))
+	return uint64(C.float_format_op_Neg(ff.ptr, C.uint64_t(a)))
 }
 
 func (ff *FloatFormat) OpAbs(a uint64) uint64 {
-	return uint64(C.float_format_op_Abs(ff.ptr, C.ulong(a)))
+	return uint64(C.float_format_op_Abs(ff.ptr, C.uint64_t(a)))
 }
 
 func (ff *FloatFormat) OpSqrt(a uint64) uint64 {
-	return uint64(C.float_format_op_Sqrt(ff.ptr, C.ulong(a)))
+	return uint64(C.float_format_op_Sqrt(ff.ptr, C.uint64_t(a)))
 }
 
 func (ff *FloatFormat) OpCeil(a uint64) uint64 {
-	return uint64(C.float_format_op_Ceil(ff.ptr, C.ulong(a)))
+	return uint64(C.float_format_op_Ceil(ff.ptr, C.uint64_t(a)))
 }
 
 func (ff *FloatFormat) OpFloor(a uint64) uint64 {
-	return uint64(C.float_format_op_Floor(ff.ptr, C.ulong(a)))
+	return uint64(C.float_format_op_Floor(ff.ptr, C.uint64_t(a)))
 }
 
 func (ff *FloatFormat) OpRound(a uint64) uint64 {
-	return uint64(C.float_format_op_Round(ff.ptr, C.ulong(a)))
+	return uint64(C.float_format_op_Round(ff.ptr, C.uint64_t(a)))
 }
 
 func (ff *FloatFormat) OpTrunc(a uint64, sizeout int32) uint64 {
-	return uint64(C.float_format_op_Trunc(ff.ptr, C.ulong(a), C.uint(sizeout)))
+	return uint64(C.float_format_op_Trunc(ff.ptr, C.uint64_t(a), C.uint(sizeout)))
 }
 
 func (ff *FloatFormat) OpInt2Float(a uint64, sizein int32) uint64 {
-	return uint64(C.float_format_op_Int2Float(ff.ptr, C.ulong(a), C.uint(sizein)))
+	return uint64(C.float_format_op_Int2Float(ff.ptr, C.uint64_t(a), C.uint(sizein)))
 }
