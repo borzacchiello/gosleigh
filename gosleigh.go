@@ -94,6 +94,7 @@ const (
 const (
 	SLEIGH_ARCH_X86_64 = 1
 	SLEIGH_ARCH_X86    = 2
+	SLEIGH_ARCH_ARM    = 3
 )
 
 const (
@@ -101,6 +102,8 @@ const (
 	SLEIGH_PROC_X86_16      = 2
 	SLEIGH_PROC_X86_16_REAL = 3
 	SLEIGH_PROC_X86         = 4
+	SLEIGH_PROC_ARM7LE      = 5
+	SLEIGH_PROC_ARM7BE      = 6
 )
 
 type SleighCtx struct {
