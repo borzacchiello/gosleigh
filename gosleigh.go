@@ -159,6 +159,10 @@ type FloatFormat struct {
 	Size int
 }
 
+func OpcodeName(opcode SleighOpcode) string {
+	return C.GoString(C.sleigh_opcode_name(C.sleigh_opcode_t(opcode)))
+}
+
 func makeSleighSpace(ptr C.sleigh_address_space_t) *SleighSpace {
 	return &SleighSpace{
 		ptr:  ptr,
