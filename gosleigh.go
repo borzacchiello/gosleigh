@@ -130,13 +130,13 @@ type SleighSecNum struct {
 
 type SleighVarnode struct {
 	space  *SleighSpace
-	offset uint64
-	size   uint32
+	Offset uint64
+	Size   uint32
 }
 
 type SleighRegister struct {
-	varnode SleighVarnode
-	name    string
+	Varnode SleighVarnode
+	Name    string
 }
 
 type SleighOp struct {
@@ -206,8 +206,8 @@ func processTranslationResult(r *C.sleigh_translation_result_t) []*SleighInstruc
 					unsafe.Add(unsafe.Pointer(cop.inputs), unsafe.Sizeof(*cop.inputs)*uintptr(j)))
 				inputs = append(inputs, &SleighVarnode{
 					space:  makeSleighSpace(inp.space),
-					offset: uint64(inp.offset),
-					size:   uint32(inp.size),
+					Offset: uint64(inp.offset),
+					Size:   uint32(inp.size),
 				})
 			}
 			var output *SleighVarnode = nil
@@ -215,8 +215,8 @@ func processTranslationResult(r *C.sleigh_translation_result_t) []*SleighInstruc
 				out := (*C.sleigh_varnode_t)(unsafe.Pointer(cop.output))
 				output = &SleighVarnode{
 					space:  makeSleighSpace(out.space),
-					offset: uint64(out.offset),
-					size:   uint32(out.size),
+					Offset: uint64(out.offset),
+					Size:   uint32(out.size),
 				}
 			}
 
@@ -290,8 +290,8 @@ func (c *SleighCtx) GetRegister(name string) (*SleighVarnode, error) {
 	}
 	return &SleighVarnode{
 		space:  makeSleighSpace(raw_varnode.space),
-		offset: uint64(raw_varnode.offset),
-		size:   uint32(raw_varnode.size),
+		Offset: uint64(raw_varnode.offset),
+		Size:   uint32(raw_varnode.size),
 	}, nil
 }
 
@@ -305,11 +305,11 @@ func (c *SleighCtx) GetAllRegisters() []SleighRegister {
 	for i := 0; i < int(size); i++ {
 		reg := *(*C.sleigh_register_t)(unsafe.Add(unsafe.Pointer(regs), unsafe.Sizeof(*regs)*uintptr(i)))
 		goreg := SleighRegister{
-			name: "",
-			varnode: SleighVarnode{
+			Name: "",
+			Varnode: SleighVarnode{
 				space:  makeSleighSpace(reg.varnode.space),
-				offset: uint64(reg.varnode.offset),
-				size:   uint32(reg.varnode.size),
+				Offset: uint64(reg.varnode.offset),
+				Size:   uint32(reg.varnode.size),
 			},
 		}
 
@@ -321,7 +321,7 @@ func (c *SleighCtx) GetAllRegisters() []SleighRegister {
 			}
 			name.WriteByte(byte(c))
 		}
-		goreg.name = name.String()
+		goreg.Name = name.String()
 		res = append(res, goreg)
 	}
 	return res
@@ -333,12 +333,12 @@ func (c *SleighCtx) VarnodeToString(v *SleighVarnode) string {
 		return c.GetRegName(v)
 	}
 	if spaceName == "unique" {
-		return fmt.Sprintf("TMP_%d:%d", v.offset, v.size)
+		return fmt.Sprintf("TMP_%d:%d", v.Offset, v.Size)
 	}
 	if spaceName == "const" {
-		return fmt.Sprintf("0x%x", v.offset)
+		return fmt.Sprintf("0x%x", v.Offset)
 	}
-	return fmt.Sprintf("%s[0x%x:%d]", spaceName, v.offset, v.size)
+	return fmt.Sprintf("%s[0x%x:%d]", spaceName, v.Offset, v.Size)
 }
 
 func mkFloatFormat(ptr C.sleigh_float_format_t, size int) *FloatFormat {
@@ -415,8 +415,8 @@ func (space *SleighSpace) Name() string {
 func (varnode *SleighVarnode) cStruct() C.sleigh_varnode_t {
 	return C.sleigh_varnode_t{
 		space:  C.sleigh_address_space_t(varnode.space.ptr),
-		offset: C.uint64_t(varnode.offset),
-		size:   C.uint(varnode.size),
+		offset: C.uint64_t(varnode.Offset),
+		size:   C.uint(varnode.Size),
 	}
 }
 
