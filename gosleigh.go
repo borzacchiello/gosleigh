@@ -129,7 +129,7 @@ type SleighSecNum struct {
 }
 
 type SleighVarnode struct {
-	space  *SleighSpace
+	Space  *SleighSpace
 	Offset uint64
 	Size   uint32
 }
@@ -209,7 +209,7 @@ func processTranslationResult(r *C.sleigh_translation_result_t) []*SleighInstruc
 				inp := *(*C.sleigh_varnode_t)(
 					unsafe.Add(unsafe.Pointer(cop.inputs), unsafe.Sizeof(*cop.inputs)*uintptr(j)))
 				inputs = append(inputs, &SleighVarnode{
-					space:  makeSleighSpace(inp.space),
+					Space:  makeSleighSpace(inp.space),
 					Offset: uint64(inp.offset),
 					Size:   uint32(inp.size),
 				})
@@ -218,7 +218,7 @@ func processTranslationResult(r *C.sleigh_translation_result_t) []*SleighInstruc
 			if cop.output != nil {
 				out := (*C.sleigh_varnode_t)(unsafe.Pointer(cop.output))
 				output = &SleighVarnode{
-					space:  makeSleighSpace(out.space),
+					Space:  makeSleighSpace(out.space),
 					Offset: uint64(out.offset),
 					Size:   uint32(out.size),
 				}
@@ -293,7 +293,7 @@ func (c *SleighCtx) GetRegister(name string) (*SleighVarnode, error) {
 		return nil, fmt.Errorf("no such register")
 	}
 	return &SleighVarnode{
-		space:  makeSleighSpace(raw_varnode.space),
+		Space:  makeSleighSpace(raw_varnode.space),
 		Offset: uint64(raw_varnode.offset),
 		Size:   uint32(raw_varnode.size),
 	}, nil
@@ -311,7 +311,7 @@ func (c *SleighCtx) GetAllRegisters() []SleighRegister {
 		goreg := SleighRegister{
 			Name: "",
 			Varnode: SleighVarnode{
-				space:  makeSleighSpace(reg.varnode.space),
+				Space:  makeSleighSpace(reg.varnode.space),
 				Offset: uint64(reg.varnode.offset),
 				Size:   uint32(reg.varnode.size),
 			},
@@ -332,7 +332,7 @@ func (c *SleighCtx) GetAllRegisters() []SleighRegister {
 }
 
 func (c *SleighCtx) VarnodeToString(v *SleighVarnode) string {
-	spaceName := v.space.Name()
+	spaceName := v.Space.Name()
 	if spaceName == "register" {
 		return c.GetRegName(v)
 	}
@@ -418,7 +418,7 @@ func (space *SleighSpace) Name() string {
 
 func (varnode *SleighVarnode) cStruct() C.sleigh_varnode_t {
 	return C.sleigh_varnode_t{
-		space:  C.sleigh_address_space_t(varnode.space.ptr),
+		space:  C.sleigh_address_space_t(varnode.Space.ptr),
 		offset: C.uint64_t(varnode.Offset),
 		size:   C.uint(varnode.Size),
 	}
